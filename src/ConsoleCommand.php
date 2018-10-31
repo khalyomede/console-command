@@ -56,7 +56,7 @@
             if( is_array($this->options) === false ) {
                 $type = gettype($this->options);
 
-                throw new InvalidArgumentException("'options' property should should be an array ($type given)");
+                throw new InvalidArgumentException("'options' property should be an array ($type given)");
             }
 
             foreach( $this->options as $index => $option ) {
@@ -86,6 +86,12 @@
                 }
             }
         }
-        private function throwExceptionIfSpecificationOfFlagsIsInvalid(): void {}
+        private function throwExceptionIfSpecificationOfFlagsIsInvalid(): void {
+            if( is_array($this->flags) === false ) {
+                $type = gettype($this->flags);
+
+                throw new InvalidArgumentException("'flags' property should be an array ($type given)");
+            }
+        }
     }
 ?>
