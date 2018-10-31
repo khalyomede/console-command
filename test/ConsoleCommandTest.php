@@ -52,6 +52,10 @@
         ];
     }
 
+    class TestCommand10 extends ConsoleCommand {
+        protected $flags = null;
+    }
+
     class ConsoleCommandTest extends TestCase {
         public function testShouldThrowAnExceptionIfArgumentPropertyIsNullinsteadOfAnArray() {
             $this->expectException(InvalidArgumentException::class);
@@ -119,7 +123,7 @@
         }
 
         public function testShouldThrowAnExceptionMessageIfOptionsPropertyIsNullInsteadOfAnArray() {
-            $this->expectExceptionMessage("'options' property should should be an array (NULL given)");
+            $this->expectExceptionMessage("'options' property should be an array (NULL given)");
 
             TestCommand5::run();
         }
@@ -174,6 +178,12 @@
             $this->expectExceptionMessage("option #1 should have a string in the key 'description' (integer given)");
 
             TestCommand9::run();
+        }
+
+        public function testShouldThrowAnExceptionIfTheFlagsPropertyIsNullInsteadOfAnArray() {
+            $this->expectException(InvalidArgumentException::class);
+
+            TestCommand10::run();
         }
     }
 ?>
