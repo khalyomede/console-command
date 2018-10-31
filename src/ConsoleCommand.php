@@ -58,6 +58,23 @@
 
                 throw new InvalidArgumentException("'options' property should should be an array ($type given)");
             }
+
+            foreach( $this->options as $index => $option ) {
+                $INDEX = $index + 1;
+                $KEYS = array_keys($option);
+                $KEY_NAME = $options['name'] ?? null;
+                $KEY_SHORT_NAME = $options['shortName'] ?? null;
+                $KEY_DESCRIPTION = $options['description'] ?? null;
+
+                if( in_array('name', $KEYS) === false ) {
+                    throw new InvalidArgumentException("option #$INDEX should have a key 'name'");
+                }
+                else if( is_string($KEY_NAME) === false ) {
+                    $type = gettype($KEY_NAME);
+
+                    throw new InvalidArgumentException("option #$INDEX should have a string in the key 'name'");
+                }
+            }
         }
         private function throwExceptionIfSpecificationOfFlagsIsInvalid(): void {}
     }
