@@ -40,6 +40,18 @@
         ];
     }
 
+    class TestCommand8 extends ConsoleCommand {
+        protected $options = [
+            ['name' => 'foo', 'shortName' => 42]
+        ];
+    }
+
+    class TestCommand9 extends ConsoleCommand {
+        protected $options = [
+            ['name' => 'foo', 'shortName' => 'f', 'description' => 42]
+        ];
+    }
+
     class ConsoleCommandTest extends TestCase {
         public function testShouldThrowAnExceptionIfArgumentPropertyIsNullinsteadOfAnArray() {
             $this->expectException(InvalidArgumentException::class);
@@ -135,9 +147,33 @@
         }
 
         public function testShouldThrowAnExceptionMessageIfAnOptionHasAnIntegerInsteadOfAStringInTheKeyName() {
-            $this->expectExceptionMessage("option #1 should have a string in the key 'name'");
+            $this->expectExceptionMessage("option #1 should have a string in the key 'name' (integer given)");
 
             TestCommand7::run();
+        }
+
+        public function testShouldThrowAnExceptionIfAnOptionHasAnIntegerInsteadOfAStringInTheKeyShortName() {
+            $this->expectException(InvalidArgumentException::class);
+
+            TestCommand8::run();
+        }
+
+        public function testShouldThrowAnExceptionMessageIfAnOptionHasAnIntegerInsteadOfAStringInTheKeyShortName() {
+            $this->expectExceptionMessage("option #1 should have a string in the key 'shortName' (integer given)");
+
+            TestCommand8::run();
+        }
+
+        public function testShouldThrowAnExceptionIfOptionHasAnIntegerInsteadOfAStringInTheKeyDescription() {
+            $this->expectException(InvalidArgumentException::class);
+
+            TestCommand9::run();
+        }
+
+        public function testShouldThrowAnExceptionMessageIfOptionHasAnIntegerInsteadOfAStringInTheKeyDescription() {
+            $this->expectExceptionMessage("option #1 should have a string in the key 'description' (integer given)");
+
+            TestCommand9::run();
         }
     }
 ?>
