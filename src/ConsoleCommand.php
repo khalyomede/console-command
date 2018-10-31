@@ -62,9 +62,9 @@
             foreach( $this->options as $index => $option ) {
                 $INDEX = $index + 1;
                 $KEYS = array_keys($option);
-                $KEY_NAME = $options['name'] ?? null;
-                $KEY_SHORT_NAME = $options['shortName'] ?? null;
-                $KEY_DESCRIPTION = $options['description'] ?? null;
+                $KEY_NAME = $option['name'] ?? null;
+                $KEY_SHORT_NAME = $option['shortName'] ?? null;
+                $KEY_DESCRIPTION = $option['description'] ?? null;
 
                 if( in_array('name', $KEYS) === false ) {
                     throw new InvalidArgumentException("option #$INDEX should have a key 'name'");
@@ -72,7 +72,17 @@
                 else if( is_string($KEY_NAME) === false ) {
                     $type = gettype($KEY_NAME);
 
-                    throw new InvalidArgumentException("option #$INDEX should have a string in the key 'name'");
+                    throw new InvalidArgumentException("option #$INDEX should have a string in the key 'name' ($type given)");
+                }
+                else if( in_array('shortName', $KEYS) === true && is_string($KEY_SHORT_NAME) === false ) {
+                    $type = gettype($KEY_SHORT_NAME);
+
+                    throw new InvalidArgumentException("option #$INDEX should have a string in the key 'shortName' ($type given)");
+                }
+                else if( in_array('description', $KEYS) === true && is_string($KEY_DESCRIPTION) === false ) {
+                    $type = gettype($KEY_DESCRIPTION);
+
+                    throw new InvalidArgumentException("option #$INDEX should have a string in the key 'description' ($type given)");
                 }
             }
         }
