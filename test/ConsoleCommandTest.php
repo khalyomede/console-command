@@ -1,6 +1,5 @@
 <?php
     use PHPUnit\Framework\TestCase;
-
     use Khalyomede\ConsoleCommand;
 
     class TestCommand1 extends ConsoleCommand {
@@ -27,6 +26,18 @@
 
     class TestCommand5 extends ConsoleCommand {
         protected $options = null;
+    }
+
+    class TestCommand6 extends ConsoleCommand {
+        protected $options = [
+            ['names' => 'foo']
+        ];
+    }
+
+    class TestCommand7 extends ConsoleCommand {
+        protected $options = [
+            ['name' => 42]
+        ];
     }
 
     class ConsoleCommandTest extends TestCase {
@@ -104,5 +115,29 @@
         /**
          * @todo repeat 2 above for every types possibles
          */
+
+        public function testShouldThrowAnExceptionIfAnOptionHasNotTheKeyName() {
+            $this->expectException(InvalidArgumentException::class);
+
+            TestCommand6::run();
+        }
+
+        public function testShouldThrowAnExceptionMessageIfAnOptionHasNotTheKeyName() {
+            $this->expectExceptionMessage("option #1 should have a key 'name'");
+
+            TestCommand6::run();
+        }
+
+        public function testShouldThrowAnExceptionIfAnOptionHasAnIntegerInsteadOfAStringInTheKeyName() {
+            $this->expectException(InvalidArgumentException::class);
+
+            TestCommand7::run();
+        }
+
+        public function testShouldThrowAnExceptionMessageIfAnOptionHasAnIntegerInsteadOfAStringInTheKeyName() {
+            $this->expectExceptionMessage("option #1 should have a string in the key 'name'");
+
+            TestCommand7::run();
+        }
     }
 ?>
