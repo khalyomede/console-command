@@ -56,6 +56,42 @@
         protected $flags = null;
     }
 
+    class TestCommand11 extends ConsoleCommand {
+        protected $flags = [
+            ['names' => 42]
+        ];
+    }
+
+    class TestCommand12 extends ConsoleCommand {
+        protected $flags = [
+            ['name' => 42]
+        ];
+    }
+
+    class TestCommand13 extends ConsoleCommand {
+        protected $flags = [
+            ['name' => "foo", 'shortName' => 42]
+        ];
+    }
+
+    class TestCommand14 extends ConsoleCommand {
+        protected $flags = [
+            ['name' => "foo", 'shortName' => 'f', 'description' => 42]
+        ];
+    }
+
+    class TestCommand15 extends ConsoleCommand {
+        protected $flags = [
+            ['name' => 'help']
+        ];
+    }
+
+    class TestCommand16 extends ConsoleCommand {
+        protected $flags = [
+            ['name' => 'hoo', 'shortName' => 'h']
+        ];
+    }
+
     class ConsoleCommandTest extends TestCase {
         public function testShouldThrowAnExceptionIfArgumentPropertyIsNullinsteadOfAnArray() {
             $this->expectException(InvalidArgumentException::class);
@@ -184,6 +220,82 @@
             $this->expectException(InvalidArgumentException::class);
 
             TestCommand10::run();
+        }
+
+        public function testShouldThrowAnExceptionIfFlagHasAnNotTheKeyName() {
+            $this->expectException(InvalidArgumentException::class);
+
+            TestCommand11::run();
+        }
+
+        public function testShouldThrowAnExceptionMessageIfFlagHasAnNotTheKeyName() {
+            $this->expectExceptionMessage("flag #1 should have a key 'name'");
+
+            TestCommand11::run();
+        }
+
+        public function testShouldThrowAnExceptionIfFlagHasAnIntegerInsteadOfAStringInTheKeyName() {
+            $this->expectException(InvalidArgumentException::class);
+
+            TestCommand12::run();
+        }
+
+        public function testShouldThrowAnExceptionMessageIfFlagHasAnIntegerInsteadOfAStringInTheKeyName() {
+            $this->expectExceptionMessage("flag #1 should have a string in the key 'name' (integer given)");
+
+            TestCommand12::run();
+        }
+
+        public function testShouldThrowAnExceptionIfFlagHasAnIntegerInsteadOfAStringInTheKeyShortName() {
+            $this->expectException(InvalidArgumentException::class);
+
+            TestCommand13::run();
+        }
+
+        public function testShouldThrowAnExceptionMessageIfFlagHasAnIntegerInsteadOfAStringInTheKeyShortName() {
+            $this->expectExceptionMessage("flag #1 should have a string in the key 'shortName' (integer given)");
+
+            TestCommand13::run();
+        }
+
+        public function testShouldThrowAnExceptionIfFlagHasAnIntegerInsteadOfAStringInTheKeyDescription() {
+            $this->expectException(InvalidArgumentException::class);
+
+            TestCommand14::run();
+        }
+
+        public function testShouldThrowAnExceptionMessageIfFlagHasAnIntegerInsteadOfAStringInTheKeyDescription() {
+            $this->expectExceptionMessage("flag #1 should have a string in the key 'description' (integer given)");
+
+            TestCommand14::run();
+        }
+
+        public function testShouldThrowAnExceptionIfAFlagNameIsAReservedFlagName() {
+            $this->expectException(InvalidArgumentException::class);
+
+            TestCommand15::run();
+        }
+
+        public function testShouldThrowAnExceptionMessageIfAFlagNameIsAReservedFlagName() {
+            $FLAG_NAMES = implode(', ', TestCommand15::RESERVED_FLAG_NAMES);
+
+            $this->expectExceptionMessage("flag #1 should not have the following reserved flags names: $FLAG_NAMES");
+
+            TestCommand15::run();
+        }
+
+        public function testShouldThrowAnExceptionIfAFlagShortNameIsAReservedFlagShortName() {
+            $this->expectException(InvalidArgumentException::class);
+
+            TestCommand16::run();
+        }
+
+        public function testShouldThrowAnExceptionMessageIfAFlagShortNameIsAReservedFlagShortName() {
+            $FLAG_SHORT_NAMES = implode(', ', TestCommand16::RESERVED_FLAG_SHORT_NAMES);
+
+            $this->expectExceptionMessage("flag #1 should not have the following reserved flag short names: $FLAG_SHORT_NAMES");
+
+            TestCommand16::run();
         }
     }
 ?>
