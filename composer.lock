@@ -4,8 +4,48 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fae051d134bd68043fa55d1f1b9ef4c6",
-    "packages": [],
+    "content-hash": "ba899282731411fb9d13255f3548701a",
+    "packages": [
+        {
+            "name": "khalyomede/command-parser",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/khalyomede/command-parser.git",
+                "reference": "2e733c67f31cf167b86929d4bff4332b53a50963"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/khalyomede/command-parser/zipball/2e733c67f31cf167b86929d4bff4332b53a50963",
+                "reference": "2e733c67f31cf167b86929d4bff4332b53a50963",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Khalyomede\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Khalyomede",
+                    "email": "khalyomede@gmail.com"
+                }
+            ],
+            "description": "Parse arguments, options and flags.",
+            "time": "2018-11-04T20:31:03+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",
